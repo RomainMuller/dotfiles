@@ -1,0 +1,64 @@
+[alias]
+	dag = "log --graph --abbrev-commit --decorate --format=format:'%C(blue)%h%C(reset) - %C(cyan)%aD%C(reset) %C(green)(%ar)%C(reset)%C(yellow)%d%C(reset)%n'' %C(white)%s%C(reset) %C(white)- %an%C(reset)'"
+	fork = "!f(){ git fetch origin +$(git config init.defaultBranch):$(git config init.defaultBranch) && git machete add -y --onto=$(git config init.defaultBranch) ""${USER}/$1""; }; f"
+	stack = "!f(){ git machete add -y ""${USER}/$1""; }; f"
+	recommit = "commit --amend --reuse-message=HEAD"
+	m = "machete"
+[core]
+	autocrlf = false
+	eol = lf
+	hooksPath = /usr/local/dd/global_hooks
+	excludesfile = /Users/romain.marcadier/.gitignore
+	attributesfile = /Users/romain.marcadier/.gitattributes
+	fsmonitor = true
+[commit]
+	gpgsign = true
+[user]
+	name = Romain Marcadier
+	email = "romain.muller@telecomnancy.net"
+[init]
+	defaultBranch = main
+[fetch]
+	prune = true
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
+[maintenance]
+	strategy = incremental
+	repo = /Users/romain.marcadier/Development/Datadog/datadog-agent
+	repo = /Users/romain.marcadier/Development/Datadog/dd-go
+	repo = /Users/romain.marcadier/Development/Datadog/dd-source
+	repo = /Users/romain.marcadier/Development/Datadog/dd-trace-go
+	repo = /Users/romain.marcadier/Development/Datadog/documentation
+	repo = /Users/romain.marcadier/Development/Datadog/system-tests
+[rerere]
+	enabled = true
+[column]
+	ui = auto
+[branch]
+	sort = -committerdate
+[merge]
+	conflictstyle = diff3
+[diff]
+	colorMoved = default
+	external = difft
+[fsmonitor]
+	socketDir = /Users/romain.marcadier/.cache/git-fsmonitor
+
+[includeIf "hasconfig:remote.*.url:git@github.com:DataDog/**"]
+	path = /Users/romain.marcadier/.gitconfig.datadog
+[includeIf "hasconfig:remote.*.url:github.com:DataDog/**"]
+	path = /Users/romain.marcadier/.gitconfig.datadog
+[advice]
+	macheteEditorSelection = false
+[http]
+	cookiefile = /Users/romain.marcadier/.gitcookies
+
+[merge "mergiraf"]
+	name = mergiraf
+	driver = mergiraf merge --git %O %A %B -s %S -x %X -y %Y -p %P
+[safe]
+	directory = /Users/romain.marcadier/Development/Datadog/dd-trace-go.v2/.git
+	directory = /Users/romain.marcadier/Development/Datadog/dd-trace-go/.git
