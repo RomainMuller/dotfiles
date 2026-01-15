@@ -1,0 +1,28 @@
+{
+  "title": "Cursor Tab: Emit Control+E",
+  "rules": [
+    {
+      "description": "Cursor Tab: Tab → Control+E",
+      "manipulators": [
+        {
+          "type": "basic",
+          "from": { "key_code": "tab" },
+          "to": [
+            { "key_code": "e", "modifiers": ["control"] }
+          ],
+          "conditions": [
+            {
+              "type": "device_if",
+              "identifiers": [
+                {
+                  "vendor_id": 34824,
+                  "product_id": 26112
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

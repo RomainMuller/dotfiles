@@ -1,40 +1,55 @@
-[core]
-  excludesfile = ~/.gitignore
-  editor = code -w
-  trustctime = false
-  eol = lf
-  autocrlf = input
-
-[user]
-  name = Jonas Friedmann
-  email = j@frd.mn
-  signingkey = D713FC95
-
-[merge]
-  log = true
-
-[push]
-  default = simple
-
-[difftool]
-  prompt = false
-  tool = vimdiff
-
-[mergetool]
-  prompt = false
-
 [alias]
-  s = status
-  ci = "commit -m"
-  l = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset (%GK) %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
-  pushup = "!gitbranchname() { git symbolic-ref --short HEAD; }; gitpushupstream() { git push --set-upstream origin `gitbranchname`; }; gitpushupstream"
-  delete-merged-branches = "!git branch --merged | egrep -v '(^\\*|master|dev)' | xargs echo git branch -d"
+	dag = "log --graph --abbrev-commit --decorate --format=format:'%C(blue)%h%C(reset) - %C(cyan)%aD%C(reset) %C(green)(%ar)%C(reset)%C(yellow)%d%C(reset)%n'' %C(white)%s%C(reset) %C(white)- %an%C(reset)'"
+
+[core]
+	autocrlf = false
+	eol = lf
+	excludesfile = ${HOME}/.gitignore
+	attributesfile = ${HOME}/.gitattributes
+	fsmonitor = true
 
 [commit]
-  gpgsign = true
+	gpgsign = true
 
-[github]
-  user = frdmn
+[user]
+	name = Romain Marcadier
+	email = "romain.muller@telecomnancy.net"
 
 [init]
 	defaultBranch = main
+
+[fetch]
+	prune = true
+
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
+
+[rerere]
+	enabled = true
+
+[column]
+	ui = auto
+
+[branch]
+	sort = -committerdate
+
+[merge]
+	conflictstyle = diff3
+
+[diff]
+	colorMoved = default
+	external = difft
+
+[fsmonitor]
+	socketDir = ${HOME}/.cache/git-fsmonitor
+
+[includeIf "hasconfig:remote.*.url:git@github.com:DataDog/**"]
+	path = ${HOME}/.gitconfig.datadog
+[includeIf "hasconfig:remote.*.url:github.com:DataDog/**"]
+	path = ${HOME}/.gitconfig.datadog
+
+[http]
+	cookiefile = ${HOME}/.gitcookies

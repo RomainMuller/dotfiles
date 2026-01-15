@@ -3,3 +3,31 @@
 
 # dotfiles config/overrides
 config.yml
+
+# Local objects
+/files/**/*.local.zsh
+
+# Undesired config files
+/files/dotfiles/claude/cache/
+/files/dotfiles/claude/debug/
+/files/dotfiles/claude/file-history/
+/files/dotfiles/claude/ide/
+/files/dotfiles/claude/plans/
+/files/dotfiles/claude/plugins/
+/files/dotfiles/claude/projects/
+/files/dotfiles/claude/session-env/
+/files/dotfiles/claude/shell-snapshots/
+/files/dotfiles/claude/statsig/
+/files/dotfiles/claude/todos/
+/files/dotfiles/claude/history.jsonl
+/files/dotfiles/claude/stats-cache.json
+/files/dotfiles/config/iterm2/
+/files/dotfiles/gnupg/crls.d/
+/files/dotfiles/gnupg/opengpg-revocs.d/
+/files/dotfiles/gnupg/private-keys-v1.d/
+/files/dotfiles/gnupg/public-keys-v1.d/
+/files/dotfiles/gnupg/random_seed
+/files/dotfiles/gnupg/reader_*.status
+/files/dotfiles/gnupg/S.*
+/files/dotfiles/gnupg/sshcontrol
+/files/dotfiles/gnupg/trustdb.gpg

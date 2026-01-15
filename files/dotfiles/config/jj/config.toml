@@ -1,0 +1,74 @@
+"$schema" = "https://jj-vcs.github.io/jj/latest/config-schema.json"
+
+[aliases]
+init = ["git", "init"]
+push = ["git", "push"]
+fetch = ["git", "fetch"]
+track = ["bookmark", "track"]
+tug = ["bookmark", "move", "--from", "closest_bookmark(@)", "--to", "closest_pushable(@)"]
+watch = ["util", "exec", "--", "watch", "--color", "--", "jj", "--color=always", "--ignore-working-copy", "log"]
+gc = ["abandon", "garbage()"]
+
+[colors]
+"diff token" = { underline = false }
+"diff removed token" = { bg = "red", fg = "white" }
+"diff added token" = { bg = "green", fg = "black" }
+
+[experimental-advance-branches]
+enabled = ["glob:romain.marcadier/*"]
+
+[fsmonitor]
+backend = "watchman"
+watchman.register-snapshot-trigger = true
+
+[git]
+abandon-unreachable-commits = true
+auto-local-bookmark = false
+colocate = true
+private-commits = "description(glob:'wip:*') | description(glob:'private:*')"
+sign-on-push = true
+subprocess = true
+track-default-bookmark-on-clone = false
+write-change-id-header = true
+
+[remotes.origin]
+auto-track-bookmarks = 'glob:romain.marcadier/*'
+
+[revsets]
+log = 'fork_point(connected(@ | trunk() | present(bookmarks())))::connected(@ | trunk() | present(bookmarks()))'
+
+[revset-aliases]
+'closest_bookmark(to)' = 'heads(::to & ~builtin_immutable_heads() & ~pinned() & bookmarks())'
+'closest_pushable(to)' = 'heads(::to & ~builtin_immutable_heads() & ~pinned() & ~description(exact:"") & (~empty() | merges()))'
+'immutable_heads()' = 'builtin_immutable_heads() | present(remote_bookmarks())'
+'pinned()' = 'root()'
+'garbage()' = '(::visible_heads() & mutable()) ~ ::(bookmarks() | working_copies())'
+
+[snapshot]
+auto-update-stale = true
+
+[templates]
+log_node = '''
+if(self && !current_working_copy && !immutable && !conflict && self.contained_in("builtin_immutable_heads()..bookmarks()"),
+ "◇",
+  builtin_log_node
+)
+'''
+commit_trailers = 'if(!trailers.contains_key("JJ-Change-Id"), "JJ-Change-Id: " ++ self.change_id().short(6))'
+git_push_bookmark = '"romain.marcadier/push-" ++ change_id.short()'
+
+[ui]
+conflict-marker-style = "git"
+default-command = ["log"]
+merge-editor = "vscode"
+movement.edit = true
+show-cryptographic-signatures = true
+
+[user]
+name = "Romain Marcadier"
+email = "romain.marcadier@datadoghq.com"
+
+[signing]
+enabled = true
+backend = "gpg"
+behavior = "own"
