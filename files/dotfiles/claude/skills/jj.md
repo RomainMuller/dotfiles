@@ -41,8 +41,9 @@ description: Use the jj version control system. Always use it when the user ment
 ### Git Integration
 - `jj git init` - Initialize jj repository with git backend
 - `jj git fetch` - Fetch from remote (updates tracked bookmarks)
+  - Also available as `jj fetch`
 - `jj git push` - Push bookmarks to remote
-- `jj git push --allow-new` - Push including new bookmarks
+  - Also available as `jj push`
 
 ### Utilities
 - `jj undo` - Undo last jj command

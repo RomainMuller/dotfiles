@@ -4,9 +4,8 @@
 [core]
 	autocrlf = false
 	eol = lf
-	excludesfile = ${HOME}/.gitignore
-	attributesfile = ${HOME}/.gitattributes
 	fsmonitor = true
+	hooksPath = /usr/local/dd/global_hooks
 
 [commit]
 	gpgsign = true
